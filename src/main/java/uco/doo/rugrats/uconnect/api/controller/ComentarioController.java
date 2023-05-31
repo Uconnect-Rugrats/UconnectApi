@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import uco.doo.rugrats.uconnect.api.controller.response.Response;
@@ -84,14 +85,15 @@ public class ComentarioController {
 		
 		return new ResponseEntity<>(response,statusCode);
 	}
-	@PutMapping
-	public ResponseEntity<Response<ComentarioDTO>> update(@PathVariable UUID id, @RequestBody ComentarioDTO dto) {
+	@PutMapping("/{id}")
+	public ResponseEntity<Response<ComentarioDTO>> update(@RequestParam UUID id,@RequestBody ComentarioDTO dto) {
 		facade = new ComentarioFacadeImpl();
 
 		var statusCode = HttpStatus.OK;
 		var response = new Response<ComentarioDTO>();
 		
 		try {
+			dto.setIdentificador(id);
 			var result = CambiarEstadoComentarioValidation.validate(dto);
 			if(result.getMessages().isEmpty()) {
 				facade.cambiarEstado(dto);
@@ -115,7 +117,7 @@ public class ComentarioController {
 		
 		return new ResponseEntity<>(response,statusCode);
 	}
-	@DeleteMapping
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Response<ComentarioDTO>> drop(@PathVariable UUID id) {
 		facade = new ComentarioFacadeImpl();
 
