@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import uco.doo.rugrats.uconnect.api.controller.response.Response;
+import uco.doo.rugrats.uconnect.busisness.facade.TipoOrganizacionFacade;
+import uco.doo.rugrats.uconnect.busisness.facade.facadeImpl.TipoOrganizacionFacadeImpl;
 import uco.doo.rugrats.uconnect.dto.TipoOrganizacionDTO;
 
 @RestController
@@ -20,16 +22,15 @@ import uco.doo.rugrats.uconnect.dto.TipoOrganizacionDTO;
 public final class TipoOrganizacionController {
 	
 	
-	public TipoOrganizacionController() {
-		super();
-	}
+	private TipoOrganizacionFacade facade;
 	@GetMapping("/dummy")
 	public TipoOrganizacionDTO dummy() {
 		return TipoOrganizacionDTO.create();
 	}
 	@GetMapping
 	public ResponseEntity<Response<TipoOrganizacionDTO>> list(@RequestBody TipoOrganizacionDTO dto) {
-		List<TipoOrganizacionDTO> list = new ArrayList<>();
+		facade = new TipoOrganizacionFacadeImpl();
+		List<TipoOrganizacionDTO> list = facade.consultar(dto);
 		
 		List<String> messages = new ArrayList<>();
 		messages.add("Tipos de organizaciones consultadas exitosamente");

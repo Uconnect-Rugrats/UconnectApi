@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import uco.doo.rugrats.uconnect.api.controller.response.Response;
+import uco.doo.rugrats.uconnect.busisness.facade.TipoIdentificacionFacade;
+import uco.doo.rugrats.uconnect.busisness.facade.facadeImpl.TipoIdentificacionFacadeImpl;
 import uco.doo.rugrats.uconnect.dto.TipoIdentificacionDTO;
 
 @RestController
@@ -20,16 +22,15 @@ import uco.doo.rugrats.uconnect.dto.TipoIdentificacionDTO;
 public final class TipoIdentificacionController {
 	
 	
-	public TipoIdentificacionController() {
-		super();
-	}
+	private TipoIdentificacionFacade facade;
 	@GetMapping("/dummy")
 	public TipoIdentificacionDTO dummy() {
 		return TipoIdentificacionDTO.create();
 	}
 	@GetMapping
 	public ResponseEntity<Response<TipoIdentificacionDTO>> list(@RequestBody TipoIdentificacionDTO dto) {
-		List<TipoIdentificacionDTO> list = new ArrayList<>();
+		facade = new TipoIdentificacionFacadeImpl();
+		List<TipoIdentificacionDTO> list = facade.consultar(dto);
 		
 		List<String> messages = new ArrayList<>();
 		messages.add("Tipos de identificación consultados exitosamente");

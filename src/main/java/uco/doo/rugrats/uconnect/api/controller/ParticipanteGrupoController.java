@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import uco.doo.rugrats.uconnect.api.controller.response.Response;
+import uco.doo.rugrats.uconnect.busisness.facade.ParticipanteGrupoFacade;
+import uco.doo.rugrats.uconnect.busisness.facade.facadeImpl.ParticipanteGrupoFacadeImpl;
 import uco.doo.rugrats.uconnect.dto.ParticipanteGrupoDTO;
 
 @RestController
@@ -20,16 +22,15 @@ import uco.doo.rugrats.uconnect.dto.ParticipanteGrupoDTO;
 public final class ParticipanteGrupoController {
 	
 	
-	public ParticipanteGrupoController() {
-		super();
-	}
+	private ParticipanteGrupoFacade facade;
 	@GetMapping("/dummy")
 	public ParticipanteGrupoDTO dummy() {
 		return ParticipanteGrupoDTO.create();
 	}
 	@GetMapping
 	public ResponseEntity<Response<ParticipanteGrupoDTO>> list(@RequestBody ParticipanteGrupoDTO dto) {
-		List<ParticipanteGrupoDTO> list = new ArrayList<>();
+		facade = new ParticipanteGrupoFacadeImpl();
+		List<ParticipanteGrupoDTO> list = facade.consultar(dto);
 		
 		List<String> messages = new ArrayList<>();
 		messages.add("Participantes de grupos consultados exitosamente");

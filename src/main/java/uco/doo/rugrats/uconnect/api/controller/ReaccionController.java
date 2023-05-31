@@ -39,7 +39,7 @@ public class ReaccionController {
 	@GetMapping
 	public ResponseEntity<Response<ReaccionDTO>> list(@RequestParam ReaccionDTO dto) {
 		facade = new ReaccionFacadeImpl();
-		List<ReaccionDTO> list = new ArrayList<>();
+		List<ReaccionDTO> list = facade.mostrar(dto);
 		
 		List<String> messages = new ArrayList<>();
 		messages.add("Calificaciones consultadas exitosamente");

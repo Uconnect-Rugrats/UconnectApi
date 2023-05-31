@@ -30,9 +30,8 @@ import uco.doo.rugrats.uconnect.dto.ComentarioDTO;
 @RequestMapping("uconnect/api/v1/comentario")
 public class ComentarioController {
 	
-private ComentarioFacade facade;
+	private ComentarioFacade facade;
 	private Logger log = LoggerFactory.getLogger(ComentarioController.class);
-
 	
 	@GetMapping("/dummy")
 	public ComentarioDTO dummy() {
@@ -42,7 +41,7 @@ private ComentarioFacade facade;
 	public ResponseEntity<Response<ComentarioDTO>> list(@RequestBody ComentarioDTO dto) {
 		facade = new ComentarioFacadeImpl();
 
-		List<ComentarioDTO> list = new ArrayList<>();
+		List<ComentarioDTO> list = facade.consultar(dto);
 		
 		List<String> messages = new ArrayList<>();
 		messages.add("los comentarios han sido consultados exitosamente");

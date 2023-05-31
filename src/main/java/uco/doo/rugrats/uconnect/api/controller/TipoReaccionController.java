@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import uco.doo.rugrats.uconnect.api.controller.response.Response;
+import uco.doo.rugrats.uconnect.busisness.facade.TipoReaccionFacade;
+import uco.doo.rugrats.uconnect.busisness.facade.facadeImpl.TipoReaccionFacadeImpl;
 import uco.doo.rugrats.uconnect.dto.TipoReaccionDTO;
 
 @RestController
@@ -20,16 +22,15 @@ import uco.doo.rugrats.uconnect.dto.TipoReaccionDTO;
 public final class TipoReaccionController {
 	
 	
-	public TipoReaccionController() {
-		super();
-	}
+	private TipoReaccionFacade facade;
 	@GetMapping("/dummy")
 	public TipoReaccionDTO dummy() {
 		return TipoReaccionDTO.create();
 	}
 	@GetMapping
 	public ResponseEntity<Response<TipoReaccionDTO>> list(@RequestBody TipoReaccionDTO dto) {
-		List<TipoReaccionDTO> list = new ArrayList<>();
+		facade = new TipoReaccionFacadeImpl();
+		List<TipoReaccionDTO> list = facade.consultar(dto);
 		
 		List<String> messages = new ArrayList<>();
 		messages.add("Tipos de reacción consultados exitosamente");

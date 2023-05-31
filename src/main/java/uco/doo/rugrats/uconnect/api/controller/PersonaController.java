@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import uco.doo.rugrats.uconnect.api.controller.response.Response;
+import uco.doo.rugrats.uconnect.busisness.facade.PersonaFacade;
+import uco.doo.rugrats.uconnect.busisness.facade.facadeImpl.PersonaFacadeImpl;
 import uco.doo.rugrats.uconnect.dto.PersonaDTO;
 
 @RestController
@@ -20,16 +22,15 @@ import uco.doo.rugrats.uconnect.dto.PersonaDTO;
 public final class PersonaController {
 	
 	
-	public PersonaController() {
-		super();
-	}
+	private PersonaFacade facade;
 	@GetMapping("/dummy")
 	public PersonaDTO dummy() {
 		return PersonaDTO.create();
 	}
 	@GetMapping
 	public ResponseEntity<Response<PersonaDTO>> list(@RequestBody PersonaDTO dto) {
-		List<PersonaDTO> list = new ArrayList<>();
+		facade = new PersonaFacadeImpl();
+		List<PersonaDTO> list = facade.consultar(dto);
 		
 		List<String> messages = new ArrayList<>();
 		messages.add("Personas consultadas exitosamente");

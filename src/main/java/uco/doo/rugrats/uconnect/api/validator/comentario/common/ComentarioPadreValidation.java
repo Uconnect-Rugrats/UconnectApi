@@ -16,10 +16,7 @@ public class ComentarioPadreValidation implements Validation<ComentarioDTO>{
 	public Result execute(ComentarioDTO data) {
 		var result = Result.create();
 		
-		if(UtilObject.isNull(data)) {
-			result.addMessage("No es posible continuar con el comentario vacio");
-		}
-		else if(UtilObject.isDefault(data, ComentarioDTO.create())) {
+		if(UtilObject.isDefault(data, ComentarioDTO.create())) {
 			result.addMessage("No es posible continuar con los datos del comentario con sus valores por defecto");
 		}
 		return result;

@@ -13,23 +13,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import uco.doo.rugrats.uconnect.api.controller.response.Response;
+import uco.doo.rugrats.uconnect.busisness.facade.PaisFacade;
+import uco.doo.rugrats.uconnect.busisness.facade.facadeImpl.PaisFacadeImpl;
 import uco.doo.rugrats.uconnect.dto.PaisDTO;
 
 @RestController
 @RequestMapping("uconnect/api/v1/pais")
 public final class PaisController {
+	private PaisFacade facade;
 	
-	
-	public PaisController() {
-		super();
-	}
 	@GetMapping("/dummy")
 	public PaisDTO dummy() {
 		return PaisDTO.create();
 	}
 	@GetMapping
 	public ResponseEntity<Response<PaisDTO>> list(@RequestBody PaisDTO dto) {
-		List<PaisDTO> list = new ArrayList<>();
+		facade = new PaisFacadeImpl();
+		List<PaisDTO> list = facade.consultar(dto);
 		
 		List<String> messages = new ArrayList<>();
 		messages.add("Paises de teléfonos consultados exitosamente");

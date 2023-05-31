@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import uco.doo.rugrats.uconnect.api.controller.response.Response;
+import uco.doo.rugrats.uconnect.busisness.facade.PublicacionFacade;
+import uco.doo.rugrats.uconnect.busisness.facade.facadeImpl.PublicacionFacadeImpl;
 import uco.doo.rugrats.uconnect.dto.PublicacionDTO;
 
 @RestController
@@ -20,16 +22,15 @@ import uco.doo.rugrats.uconnect.dto.PublicacionDTO;
 public final class PublicacionController {
 	
 	
-	public PublicacionController() {
-		super();
-	}
+	private PublicacionFacade facade;
 	@GetMapping("/dummy")
 	public PublicacionDTO dummy() {
 		return PublicacionDTO.create();
 	}
 	@GetMapping
 	public ResponseEntity<Response<PublicacionDTO>> list(@RequestBody PublicacionDTO dto) {
-		List<PublicacionDTO> list = new ArrayList<>();
+		facade = new PublicacionFacadeImpl();
+		List<PublicacionDTO> list = facade.listar(dto);
 		
 		List<String> messages = new ArrayList<>();
 		messages.add("Publicaciones consultadas exitosamente");

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import uco.doo.rugrats.uconnect.api.controller.response.Response;
+import uco.doo.rugrats.uconnect.busisness.facade.TipoEstadoFacade;
+import uco.doo.rugrats.uconnect.busisness.facade.facadeImpl.TipoEstadoFacadeImpl;
 import uco.doo.rugrats.uconnect.dto.TipoEstadoDTO;
 
 @RestController
@@ -20,16 +22,15 @@ import uco.doo.rugrats.uconnect.dto.TipoEstadoDTO;
 public final class TipoEstadoController {
 	
 	
-	public TipoEstadoController() {
-		super();
-	}
+	private TipoEstadoFacade facade;
 	@GetMapping("/dummy")
 	public TipoEstadoDTO dummy() {
 		return TipoEstadoDTO.create();
 	}
 	@GetMapping
 	public ResponseEntity<Response<TipoEstadoDTO>> list(@RequestBody TipoEstadoDTO dto) {
-		List<TipoEstadoDTO> list = new ArrayList<>();
+		facade = new TipoEstadoFacadeImpl();
+		List<TipoEstadoDTO> list = facade.consultar(dto);
 		
 		List<String> messages = new ArrayList<>();
 		messages.add("Tipos de Estados consultados exitosamente");
