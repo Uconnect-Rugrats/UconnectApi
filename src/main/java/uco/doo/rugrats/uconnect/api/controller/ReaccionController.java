@@ -20,7 +20,7 @@ import uco.doo.rugrats.uconnect.api.controller.response.Response;
 import uco.doo.rugrats.uconnect.api.validator.reaccion.EliminarReaccionValidation;
 import uco.doo.rugrats.uconnect.api.validator.reaccion.ReaccionarReaccionValidation;
 import uco.doo.rugrats.uconnect.busisness.facade.ReaccionFacade;
-import uco.doo.rugrats.uconnect.busisness.facade.facadeImpl.ReaccionFacadeImpl;
+import uco.doo.rugrats.uconnect.busisness.facade.facadeimpl.ReaccionFacadeImpl;
 import uco.doo.rugrats.uconnect.crosscutting.exception.UconnectException;
 import uco.doo.rugrats.uconnect.dto.ReaccionDTO;
 

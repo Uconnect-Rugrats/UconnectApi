@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import uco.doo.rugrats.uconnect.api.controller.response.Response;
 import uco.doo.rugrats.uconnect.busisness.facade.TipoIdentificacionFacade;
-import uco.doo.rugrats.uconnect.busisness.facade.facadeImpl.TipoIdentificacionFacadeImpl;
+import uco.doo.rugrats.uconnect.busisness.facade.facadeimpl.TipoIdentificacionFacadeImpl;
 import uco.doo.rugrats.uconnect.dto.TipoIdentificacionDTO;
 
 @RestController

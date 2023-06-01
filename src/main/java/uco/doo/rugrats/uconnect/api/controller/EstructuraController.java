@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import uco.doo.rugrats.uconnect.api.controller.response.Response;
 import uco.doo.rugrats.uconnect.busisness.facade.EstructuraFacade;
-import uco.doo.rugrats.uconnect.busisness.facade.facadeImpl.EstructuraFacadeImpl;
+import uco.doo.rugrats.uconnect.busisness.facade.facadeimpl.EstructuraFacadeImpl;
 import uco.doo.rugrats.uconnect.dto.EstructuraDTO;
 
 @RestController

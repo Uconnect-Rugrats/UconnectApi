@@ -23,7 +23,7 @@ import uco.doo.rugrats.uconnect.api.validator.comentario.CambiarEstadoComentario
 import uco.doo.rugrats.uconnect.api.validator.comentario.ComentarComentarioValidation;
 import uco.doo.rugrats.uconnect.api.validator.comentario.EliminarComentarioValidation;
 import uco.doo.rugrats.uconnect.busisness.facade.ComentarioFacade;
-import uco.doo.rugrats.uconnect.busisness.facade.facadeImpl.ComentarioFacadeImpl;
+import uco.doo.rugrats.uconnect.busisness.facade.facadeimpl.ComentarioFacadeImpl;
 import uco.doo.rugrats.uconnect.crosscutting.exception.UconnectException;
 import uco.doo.rugrats.uconnect.dto.ComentarioDTO;
 
