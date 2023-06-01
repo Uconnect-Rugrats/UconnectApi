@@ -12,13 +12,16 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import uco.doo.rugrats.uconnect.api.controller.response.Response;
+import uco.doo.rugrats.uconnect.api.validator.reaccion.CambiarReaccionValidation;
 import uco.doo.rugrats.uconnect.api.validator.reaccion.EliminarReaccionValidation;
-import uco.doo.rugrats.uconnect.api.validator.reaccion.ReaccionarReaccionValidation;
+import uco.doo.rugrats.uconnect.api.validator.reaccion.ReaccionarValidation;
 import uco.doo.rugrats.uconnect.busisness.facade.ReaccionFacade;
 import uco.doo.rugrats.uconnect.busisness.facade.facadeimpl.ReaccionFacadeImpl;
 import uco.doo.rugrats.uconnect.crosscutting.exception.UconnectException;
@@ -58,7 +61,7 @@ public class ReaccionController {
 		Response<ReaccionDTO> response = new Response<>();
 		
 		try {
-			var result = ReaccionarReaccionValidation.validate(dto);
+			var result = ReaccionarValidation.validate(dto);
 			if(result.getMessages().isEmpty()) {
 				facade.reaccionar(dto);
 				response.getMessages().add("La reacción fue registrada de forma satisfactoria");
@@ -81,7 +84,38 @@ public class ReaccionController {
 		
 		return new ResponseEntity<>(response,statusCode);
 	}
-	
+	@PutMapping("/{id}")
+	public ResponseEntity<Response<ReaccionDTO>> update(@RequestParam UUID id,@RequestBody ReaccionDTO dto) {
+		facade = new ReaccionFacadeImpl();
+
+		var statusCode = HttpStatus.OK;
+		var response = new Response<ReaccionDTO>();
+		
+		try {
+			dto.setIdentificador(id);
+			var result = CambiarReaccionValidation.validate(dto);
+			if(result.getMessages().isEmpty()) {
+				facade.cambiarReaccion(dto);
+				response.getMessages().add("El comentario fue modificado de forma satisfactoria");
+			}else {
+				statusCode = HttpStatus.BAD_REQUEST;
+				response.setMessages(result.getMessages());
+			}
+		}catch (UconnectException exception) {
+			statusCode = HttpStatus.BAD_REQUEST;
+			response.getMessages().add(exception.getUserMessage());
+			log.error(exception.getType().toString().concat("-").concat(exception.getTechnicalMessage()),exception);
+
+			
+		}catch (Exception exception) {
+			statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+			response.getMessages().add("Se ha presentado un problema inesperado. Por favor contacte con el administrador del sistema");
+			log.error("Se ha presentado un problema inesperado. Por favor, validar la consola");
+
+		}
+		
+		return new ResponseEntity<>(response,statusCode);
+	}
 	@DeleteMapping
 	public ResponseEntity<Response<ReaccionDTO>> drop(@PathVariable UUID id) {
 		facade = new ReaccionFacadeImpl();
