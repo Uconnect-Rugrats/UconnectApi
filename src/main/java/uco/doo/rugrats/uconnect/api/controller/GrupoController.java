@@ -20,28 +20,27 @@ import uco.doo.rugrats.uconnect.dto.GrupoDTO;
 @RestController
 @RequestMapping("uconnect/api/v1/grupo")
 public final class GrupoController {
-
+	
+	
+	
 	@GetMapping("/dummy")
 	public GrupoDTO dummy() {
 		return GrupoDTO.create();
 	}
-
 	@GetMapping
 	public ResponseEntity<Response<GrupoDTO>> list(@RequestBody GrupoDTO dto) {
-		GrupoFacade facade;
-		facade = new GrupoFacadeImpl();
+		GrupoFacade facade = new GrupoFacadeImpl();
 		List<GrupoDTO> list = facade.buscar(dto);
-
+		
 		List<String> messages = new ArrayList<>();
 		messages.add("Grupos consultados exitosamente");
-
-		Response<GrupoDTO> response = new Response<>(list, messages);
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		
+		Response<GrupoDTO> response = new Response<>(list,messages);
+		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
-
 	@GetMapping("/{id}")
 	public GrupoDTO listById(@PathVariable UUID id) {
 		return GrupoDTO.create().setIdentificador(id);
 	}
-
+	
 }

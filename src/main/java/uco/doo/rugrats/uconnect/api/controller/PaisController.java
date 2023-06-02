@@ -20,7 +20,7 @@ import uco.doo.rugrats.uconnect.dto.PaisDTO;
 @RestController
 @RequestMapping("uconnect/api/v1/pais")
 public final class PaisController {
-	private PaisFacade facade;
+	
 	
 	@GetMapping("/dummy")
 	public PaisDTO dummy() {
@@ -28,7 +28,7 @@ public final class PaisController {
 	}
 	@GetMapping
 	public ResponseEntity<Response<PaisDTO>> list(@RequestBody PaisDTO dto) {
-		facade = new PaisFacadeImpl();
+		PaisFacade facade = new PaisFacadeImpl();
 		List<PaisDTO> list = facade.consultar(dto);
 		
 		List<String> messages = new ArrayList<>();

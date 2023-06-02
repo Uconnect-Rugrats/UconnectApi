@@ -22,14 +22,14 @@ import uco.doo.rugrats.uconnect.dto.TipoOrganizacionDTO;
 public final class TipoOrganizacionController {
 	
 	
-	private TipoOrganizacionFacade facade;
+	
 	@GetMapping("/dummy")
 	public TipoOrganizacionDTO dummy() {
 		return TipoOrganizacionDTO.create();
 	}
 	@GetMapping
 	public ResponseEntity<Response<TipoOrganizacionDTO>> list(@RequestBody TipoOrganizacionDTO dto) {
-		facade = new TipoOrganizacionFacadeImpl();
+		TipoOrganizacionFacade facade = new TipoOrganizacionFacadeImpl();
 		List<TipoOrganizacionDTO> list = facade.consultar(dto);
 		
 		List<String> messages = new ArrayList<>();

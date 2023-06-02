@@ -26,6 +26,7 @@ import uco.doo.rugrats.uconnect.busisness.facade.ComentarioFacade;
 import uco.doo.rugrats.uconnect.busisness.facade.facadeimpl.ComentarioFacadeImpl;
 import uco.doo.rugrats.uconnect.crosscutting.exception.UconnectException;
 import uco.doo.rugrats.uconnect.dto.ComentarioDTO;
+import uco.doo.rugrats.uconnect.utils.messages.UconnectApiMessages;
 
 @RestController
 @RequestMapping("uconnect/api/v1/comentario")
@@ -39,13 +40,14 @@ public class ComentarioController {
 		return ComentarioDTO.create();
 	}
 	@GetMapping
-	public ResponseEntity<Response<ComentarioDTO>> list(@RequestBody ComentarioDTO dto) {
+	public ResponseEntity<Response<ComentarioDTO>> list() {
+		var dto = ComentarioDTO.create();
 		facade = new ComentarioFacadeImpl();
 
 		List<ComentarioDTO> list = facade.consultar(dto);
 		
 		List<String> messages = new ArrayList<>();
-		messages.add("los comentarios han sido consultados exitosamente");
+		messages.add(UconnectApiMessages.ComentarioControllerMessages.LIST_MESSAGE);
 		
 		Response<ComentarioDTO> response = new Response<>(list,messages);
 		return new ResponseEntity<>(response,HttpStatus.OK);
@@ -66,7 +68,7 @@ public class ComentarioController {
 			var result = ComentarComentarioValidation.validate(dto);
 			if(result.getMessages().isEmpty()) {
 				facade.comentar(dto);
-				response.getMessages().add("El nuevo comentario fue registrado de forma satisfactoria");
+				response.getMessages().add(UconnectApiMessages.ComentarioControllerMessages.CREATE_MESSAGE);
 			}else {
 				statusCode = HttpStatus.BAD_REQUEST;
 				response.setMessages(result.getMessages());
@@ -79,8 +81,8 @@ public class ComentarioController {
 			
 		}catch (Exception exception) {
 			statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
-			response.getMessages().add("Se ha presentado un problema inesperado. Por favor contacte con el administrador del sistema");
-			log.error("Se ha presentado un problema inesperado. Por favor, validar la consola");
+			response.getMessages().add(UconnectApiMessages.UNEXPECTED_USER_ERROR_MESSAGE);
+			log.error(UconnectApiMessages.UNEXPECTED_TECHNYCAL_ERROR_MESSAGE);
 		}
 		
 		return new ResponseEntity<>(response,statusCode);
@@ -97,7 +99,7 @@ public class ComentarioController {
 			var result = CambiarEstadoComentarioValidation.validate(dto);
 			if(result.getMessages().isEmpty()) {
 				facade.cambiarEstado(dto);
-				response.getMessages().add("El comentario fue modificado de forma satisfactoria");
+				response.getMessages().add(UconnectApiMessages.ComentarioControllerMessages.MODIFY_MESSAGE);
 			}else {
 				statusCode = HttpStatus.BAD_REQUEST;
 				response.setMessages(result.getMessages());
@@ -110,9 +112,8 @@ public class ComentarioController {
 			
 		}catch (Exception exception) {
 			statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
-			response.getMessages().add("Se ha presentado un problema inesperado. Por favor contacte con el administrador del sistema");
-			log.error("Se ha presentado un problema inesperado. Por favor, validar la consola");
-
+			response.getMessages().add(UconnectApiMessages.UNEXPECTED_USER_ERROR_MESSAGE);
+			log.error(UconnectApiMessages.UNEXPECTED_TECHNYCAL_ERROR_MESSAGE);
 		}
 		
 		return new ResponseEntity<>(response,statusCode);
@@ -128,7 +129,7 @@ public class ComentarioController {
 			var result = EliminarComentarioValidation.validate(id);
 			if(result.getMessages().isEmpty()) {
 				facade.eliminar(id);
-				response.getMessages().add("El comentario fue eliminado de forma satisfactoria");
+				response.getMessages().add(UconnectApiMessages.ComentarioControllerMessages.DELETE_MESSAGE);
 			}else {
 				statusCode = HttpStatus.BAD_REQUEST;
 				response.setMessages(result.getMessages());
@@ -140,8 +141,8 @@ public class ComentarioController {
 			
 		}catch (Exception exception) {
 			statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
-			response.getMessages().add("Se ha presentado un problema inesperado. Por favor contacte con el administrador del sistema");
-			log.error("Se ha presentado un problema inesperado. Por favor, validar la consola");
+			response.getMessages().add(UconnectApiMessages.UNEXPECTED_USER_ERROR_MESSAGE);
+			log.error(UconnectApiMessages.UNEXPECTED_TECHNYCAL_ERROR_MESSAGE);
 
 		}
 		

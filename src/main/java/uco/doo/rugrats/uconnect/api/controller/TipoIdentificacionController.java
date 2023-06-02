@@ -22,14 +22,14 @@ import uco.doo.rugrats.uconnect.dto.TipoIdentificacionDTO;
 public final class TipoIdentificacionController {
 	
 	
-	private TipoIdentificacionFacade facade;
+	
 	@GetMapping("/dummy")
 	public TipoIdentificacionDTO dummy() {
 		return TipoIdentificacionDTO.create();
 	}
 	@GetMapping
 	public ResponseEntity<Response<TipoIdentificacionDTO>> list(@RequestBody TipoIdentificacionDTO dto) {
-		facade = new TipoIdentificacionFacadeImpl();
+		TipoIdentificacionFacade facade = new TipoIdentificacionFacadeImpl();
 		List<TipoIdentificacionDTO> list = facade.consultar(dto);
 		
 		List<String> messages = new ArrayList<>();

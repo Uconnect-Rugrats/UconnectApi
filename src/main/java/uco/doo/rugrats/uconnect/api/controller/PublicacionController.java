@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,14 +21,15 @@ import uco.doo.rugrats.uconnect.dto.PublicacionDTO;
 public final class PublicacionController {
 	
 	
-	private PublicacionFacade facade;
+	
 	@GetMapping("/dummy")
 	public PublicacionDTO dummy() {
 		return PublicacionDTO.create();
 	}
 	@GetMapping
-	public ResponseEntity<Response<PublicacionDTO>> list(@RequestBody PublicacionDTO dto) {
-		facade = new PublicacionFacadeImpl();
+	public ResponseEntity<Response<PublicacionDTO>> list() {
+		var dto = PublicacionDTO.create();
+		PublicacionFacade facade = new PublicacionFacadeImpl();
 		List<PublicacionDTO> list = facade.listar(dto);
 		
 		List<String> messages = new ArrayList<>();

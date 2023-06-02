@@ -22,14 +22,14 @@ import uco.doo.rugrats.uconnect.dto.PersonaDTO;
 public final class PersonaController {
 	
 	
-	private PersonaFacade facade;
+	
 	@GetMapping("/dummy")
 	public PersonaDTO dummy() {
 		return PersonaDTO.create();
 	}
 	@GetMapping
 	public ResponseEntity<Response<PersonaDTO>> list(@RequestBody PersonaDTO dto) {
-		facade = new PersonaFacadeImpl();
+		PersonaFacade facade = new PersonaFacadeImpl();
 		List<PersonaDTO> list = facade.consultar(dto);
 		
 		List<String> messages = new ArrayList<>();
