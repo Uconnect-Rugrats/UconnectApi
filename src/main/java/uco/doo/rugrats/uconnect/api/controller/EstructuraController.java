@@ -20,27 +20,28 @@ import uco.doo.rugrats.uconnect.dto.EstructuraDTO;
 @RestController
 @RequestMapping("uconnect/api/v1/estructura")
 public final class EstructuraController {
-	
-	
-	private EstructuraFacade facade;
+
 	@GetMapping("/dummy")
 	public EstructuraDTO dummy() {
 		return EstructuraDTO.create();
 	}
+
 	@GetMapping
 	public ResponseEntity<Response<EstructuraDTO>> list(@RequestBody EstructuraDTO dto) {
+		EstructuraFacade facade;
 		facade = new EstructuraFacadeImpl();
 		List<EstructuraDTO> list = facade.consultar(dto);
-		
+
 		List<String> messages = new ArrayList<>();
 		messages.add("Estructuras consultadas exitosamente");
-		
-		Response<EstructuraDTO> response = new Response<>(list,messages);
-		return new ResponseEntity<>(response,HttpStatus.OK);
+
+		Response<EstructuraDTO> response = new Response<>(list, messages);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
+
 	@GetMapping("/{id}")
 	public EstructuraDTO listById(@PathVariable UUID id) {
 		return EstructuraDTO.create().setIdentificador(id);
 	}
-	
+
 }
