@@ -4,8 +4,7 @@ import java.time.LocalDateTime;
 
 import uco.doo.rugrats.uconnect.api.validator.Result;
 import uco.doo.rugrats.uconnect.api.validator.Validation;
-import uco.doo.rugrats.uconnect.utils.UtilDate;
-import uco.doo.rugrats.uconnect.utils.UtilObject;
+import uco.doo.rugrats.uconnect.api.validator.common.CommonDateValidator;
 
 public class FechaReaccionValidation implements Validation<LocalDateTime>{
 	private FechaReaccionValidation() {
@@ -16,14 +15,6 @@ public class FechaReaccionValidation implements Validation<LocalDateTime>{
 	}
 	@Override
 	public Result execute(LocalDateTime data) {
-		var result = Result.create();
-		
-		if(UtilDate.isNull(data)) {
-			result.addMessage("No es posible continuar con la fecha de la publicación de la reacción vacía");
-		}
-		else if(UtilObject.isDefault(data, UtilDate.getDefaultValue())) {
-			result.addMessage("No es posible continuar con la fecha de la publicación de la reacción con sus valores por defecto");
-		}
-		return result;
+		return CommonDateValidator.execute(data);
 	}
 }

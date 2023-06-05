@@ -2,10 +2,13 @@ package uco.doo.rugrats.uconnect.api.validator.comentario.common;
 
 import uco.doo.rugrats.uconnect.api.validator.Result;
 import uco.doo.rugrats.uconnect.api.validator.Validation;
+import uco.doo.rugrats.uconnect.api.validator.common.CommonObjectValidator;
 import uco.doo.rugrats.uconnect.dto.ComentarioDTO;
-import uco.doo.rugrats.uconnect.utils.UtilObject;
 
 public class ComentarioPadreValidation implements Validation<ComentarioDTO>{
+	
+	private static final String BUSINESS_NAME = "comentario padre";
+	
 	private ComentarioPadreValidation() {
 		super();
 	}
@@ -14,11 +17,6 @@ public class ComentarioPadreValidation implements Validation<ComentarioDTO>{
 	}
 	@Override
 	public Result execute(ComentarioDTO data) {
-		var result = Result.create();
-		
-		if(UtilObject.isDefault(data, ComentarioDTO.create())) {
-			result.addMessage("No es posible continuar con los datos del comentario con sus valores por defecto");
-		}
-		return result;
+		return CommonObjectValidator.excecute(data, ComentarioDTO.create(), BUSINESS_NAME);
 	}
 }

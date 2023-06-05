@@ -2,10 +2,13 @@ package uco.doo.rugrats.uconnect.api.validator.reaccion.common;
 
 import uco.doo.rugrats.uconnect.api.validator.Result;
 import uco.doo.rugrats.uconnect.api.validator.Validation;
+import uco.doo.rugrats.uconnect.api.validator.common.CommonObjectValidator;
 import uco.doo.rugrats.uconnect.dto.EstadoDTO;
-import uco.doo.rugrats.uconnect.utils.UtilObject;
 
 public class EstadoValidation implements Validation<EstadoDTO>{
+	
+	private static final String BUSINESS_NAME = "estado";
+	
 	private EstadoValidation() {
 		super();
 	}
@@ -14,14 +17,6 @@ public class EstadoValidation implements Validation<EstadoDTO>{
 	}
 	@Override
 	public Result execute(EstadoDTO data) {
-		var result = Result.create();
-		
-		if(UtilObject.isNull(data)) {
-			result.addMessage("No es posible continuar con el estado vacío");
-		}
-		else if(UtilObject.isDefault(data, EstadoDTO.create())) {
-			result.addMessage("No es posible continuar con el Estado con sus valores por defecto");
-		}
-		return result;
+		return CommonObjectValidator.excecute(data, EstadoDTO.create(), BUSINESS_NAME);
 	}
 }
