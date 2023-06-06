@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import uco.doo.rugrats.uconnect.api.controller.response.Response;
 import uco.doo.rugrats.uconnect.api.validator.comentario.CambiarEstadoComentarioValidation;
 import uco.doo.rugrats.uconnect.api.validator.comentario.ComentarComentarioValidation;
@@ -40,21 +42,29 @@ public class ComentarioController {
 		return ComentarioDTO.create();
 	}
 	@GetMapping
-	public ResponseEntity<Response<ComentarioDTO>> list() {
-		var dto = ComentarioDTO.create();
+	public ResponseEntity<Response<ComentarioDTO>> list(@RequestParam("dtoJson") String dtoJson) {
 		facade = new ComentarioFacadeImpl();
 
-		List<ComentarioDTO> list = facade.consultar(dto);
+		var statusCode = HttpStatus.OK;
+		Response<ComentarioDTO> response;
+		ObjectMapper objectMapper = new ObjectMapper();
 		
-		List<String> messages = new ArrayList<>();
-		messages.add(UconnectApiMessages.ComentarioControllerMessages.LIST_MESSAGE);
+		try {
+			ComentarioDTO dto = objectMapper.readValue(dtoJson, ComentarioDTO.class);
+			List<ComentarioDTO> list = facade.consultar(dto);
+			List<String> messages = new ArrayList<>();
+			messages.add(UconnectApiMessages.ComentarioControllerMessages.LIST_MESSAGE);
+			
+			response = new Response<>(list,messages);
+			
+		}catch (Exception exception) {
+			statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+			response = new Response<>();
+			response.getMessages().add(UconnectApiMessages.UNEXPECTED_USER_ERROR_MESSAGE);
+			log.error(UconnectApiMessages.UNEXPECTED_TECHNYCAL_ERROR_MESSAGE);
+		}
 		
-		Response<ComentarioDTO> response = new Response<>(list,messages);
-		return new ResponseEntity<>(response,HttpStatus.OK);
-	}
-	@GetMapping("/{id}")
-	public ComentarioDTO listById(@PathVariable UUID id) {
-		return ComentarioDTO.create().setIdentificador(id);
+		return new ResponseEntity<>(response,statusCode);
 	}
 	
 	@PostMapping
