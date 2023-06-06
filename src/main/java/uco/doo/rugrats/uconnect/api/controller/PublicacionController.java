@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import uco.doo.rugrats.uconnect.busisness.facade.facadeimpl.PublicacionFacadeImp
 import uco.doo.rugrats.uconnect.dto.PublicacionDTO;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("uconnect/api/v1/publicacion")
 public final class PublicacionController {
 	

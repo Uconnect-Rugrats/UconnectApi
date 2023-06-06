@@ -18,8 +18,6 @@ public class CommonUUIDValidator {
 		if (UtilUUID.isNull(data)) {
 			result.addMessage(UconnectApiMessages.CommonValidators.CommonUUIDValidator.UUID_IS_NULL);
 
-		} else if (UtilUUID.isDefault(data)) {
-			result.addMessage(UconnectApiMessages.CommonValidators.CommonUUIDValidator.UUID_IS_DEFAULT);
 		}
 		return result;
 	}
